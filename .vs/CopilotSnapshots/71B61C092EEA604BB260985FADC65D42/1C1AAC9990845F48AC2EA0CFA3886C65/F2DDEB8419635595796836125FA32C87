@@ -1,8 +1,8 @@
-import { useState } from "react";
+﻿import { useState } from "react";
 import "./App.css";
 
 /* ---------------------------------------------KITCHEN------------------------------------------------ */
-function Kitchen({ onEatOpen }) {
+function Kitchen({ onEat }) {
     const foods = [
         { name: "Jablko", impact: 0.8 },
         { name: "Banán", impact: 1.5 },
@@ -28,7 +28,7 @@ function Kitchen({ onEatOpen }) {
                             </div>
                         </div>
 
-                        <button onClick={() => onEatOpen(food)}>
+                        <button onClick={() => onEat(food.impact)}>
                             Sníst
                         </button>
                     </div>
@@ -124,8 +124,6 @@ export default function App() {
 
     /* MODAL */
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const [modalMode, setModalMode] = useState(null); // 'measurement' | 'eat' | null
-    const [modalPayload, setModalPayload] = useState(null);
     const [modalValue, setModalValue] = useState("");
 
     /* SCANNER */
@@ -169,34 +167,6 @@ export default function App() {
 
         setModalValue("");
         setIsModalOpen(false);
-        setModalMode(null);
-        setModalPayload(null);
-    };
-
-    const openMeasurementModal = () => {
-        setModalValue("");
-        setModalPayload(null);
-        setModalMode('measurement');
-        setIsModalOpen(true);
-    };
-
-    const openEatModal = (food) => {
-        setModalPayload(food);
-        setModalMode('eat');
-        setIsModalOpen(true);
-    };
-
-    const closeModal = () => {
-        setIsModalOpen(false);
-        setModalMode(null);
-        setModalPayload(null);
-        setModalValue("");
-    };
-
-    const confirmEat = () => {
-        if (!modalPayload) return;
-        eatFood(modalPayload.impact);
-        closeModal();
     };
 
     const scanProduct = () => {
@@ -236,7 +206,7 @@ export default function App() {
                                 {latest.toFixed(1)} mmol/L
                             </div>
 
-                            <button onClick={openMeasurementModal}>
+                            <button onClick={() => setIsModalOpen(true)}>
                                 + Přidat
                             </button>
                         </div>
@@ -318,7 +288,7 @@ export default function App() {
                 </div>
             )}
 
-            {page === "kitchen" && <Kitchen onEatOpen={openEatModal} />}
+            {page === "kitchen" && <Kitchen onEat={eatFood} />}
 
             {page === "scanner" && (
                 <Scanner
@@ -381,38 +351,6 @@ export default function App() {
                 <button onClick={() => setPage("scanner")}>Scanner</button>
                 <button onClick={() => setPage("insulin")}>Inzulín</button>
             </div>
-
-            {isModalOpen && (
-                <div className="modal-overlay" onClick={closeModal}>
-                    <div className="modal" onClick={(e) => e.stopPropagation()}>
-                        {modalMode === 'measurement' && (
-                            <>
-                                <h3>Přidat měření</h3>
-                                <input
-                                    value={modalValue}
-                                    onChange={(e) => setModalValue(e.target.value)}
-                                    placeholder="hodnota (mmol/L)"
-                                />
-                                <div className="modal-actions">
-                                    <button onClick={closeModal}>Zrušit</button>
-                                    <button onClick={saveMeasurement}>Uložit</button>
-                                </div>
-                            </>
-                        )}
-
-                        {modalMode === 'eat' && modalPayload && (
-                            <>
-                                <h3>Sníst: {modalPayload.name}</h3>
-                                <p>Dopad na glukózu: {modalPayload.impact > 0 ? '+' : ''}{modalPayload.impact}</p>
-                                <div className="modal-actions">
-                                    <button onClick={closeModal}>Zrušit</button>
-                                    <button onClick={confirmEat}>Sníst</button>
-                                </div>
-                            </>
-                        )}
-                    </div>
-                </div>
-            )}
 
         </div>
     );

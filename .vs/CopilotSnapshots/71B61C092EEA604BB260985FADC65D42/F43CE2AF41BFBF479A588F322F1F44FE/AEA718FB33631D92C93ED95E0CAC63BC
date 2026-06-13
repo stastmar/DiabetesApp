@@ -1,4 +1,4 @@
-.app {
+﻿.app {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -130,7 +130,6 @@ th, td {
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 1000;
 }
 
 .modal {
@@ -141,7 +140,6 @@ th, td {
   display: flex;
   flex-direction: column;
   gap: 12px;
-  z-index: 1001;
 }
 
 .modal-actions {

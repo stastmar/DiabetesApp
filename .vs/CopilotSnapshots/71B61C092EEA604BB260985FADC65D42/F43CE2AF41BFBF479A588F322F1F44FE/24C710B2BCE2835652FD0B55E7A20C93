@@ -1,4 +1,4 @@
-import { useState } from "react";
+﻿import { useState } from "react";
 import "./App.css";
 
 /* ---------------------------------------------KITCHEN------------------------------------------------ */
@@ -381,38 +381,6 @@ export default function App() {
                 <button onClick={() => setPage("scanner")}>Scanner</button>
                 <button onClick={() => setPage("insulin")}>Inzulín</button>
             </div>
-
-            {isModalOpen && (
-                <div className="modal-overlay" onClick={closeModal}>
-                    <div className="modal" onClick={(e) => e.stopPropagation()}>
-                        {modalMode === 'measurement' && (
-                            <>
-                                <h3>Přidat měření</h3>
-                                <input
-                                    value={modalValue}
-                                    onChange={(e) => setModalValue(e.target.value)}
-                                    placeholder="hodnota (mmol/L)"
-                                />
-                                <div className="modal-actions">
-                                    <button onClick={closeModal}>Zrušit</button>
-                                    <button onClick={saveMeasurement}>Uložit</button>
-                                </div>
-                            </>
-                        )}
-
-                        {modalMode === 'eat' && modalPayload && (
-                            <>
-                                <h3>Sníst: {modalPayload.name}</h3>
-                                <p>Dopad na glukózu: {modalPayload.impact > 0 ? '+' : ''}{modalPayload.impact}</p>
-                                <div className="modal-actions">
-                                    <button onClick={closeModal}>Zrušit</button>
-                                    <button onClick={confirmEat}>Sníst</button>
-                                </div>
-                            </>
-                        )}
-                    </div>
-                </div>
-            )}
 
         </div>
     );
