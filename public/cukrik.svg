@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="128" height="128" viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+	<style>
+	  .bg { fill: #0b1220; }
+	  .fur { fill: #ffffff; stroke: #e6eef6; stroke-width:1; }
+	  .eye { fill: #5db8ff; }
+	  .nose { fill: #ff9aa2; }
+	  .scarf { fill: #a9def9; }
+	</style>
+  </defs>
+  <!-- dark circular background -->
+  <circle cx="64" cy="64" r="62" class="bg" />
+
+  <!-- body/face simplified -->
+  <path class="fur" d="M64 22c-6-10-20-10-28 0-8 10-4 26 0 34 4 8 8 12 12 14 4 2 10 4 16 4s12-2 16-4c4-2 8-6 12-14 4-8 8-24 0-34-8-10-22-10-28 0z" />
+
+  <!-- ears -->
+  <path class="fur" d="M36 18 L28 6 L40 20 Z" />
+  <path class="fur" d="M92 18 L100 6 L88 20 Z" />
+
+  <!-- eyes -->
+  <ellipse cx="50" cy="56" rx="8" ry="10" class="eye" />
+  <ellipse cx="78" cy="56" rx="8" ry="10" class="eye" />
+  <circle cx="52" cy="54" r="2" fill="#fff" />
+  <circle cx="80" cy="54" r="2" fill="#fff" />
+
+  <!-- nose and mouth -->
+  <path d="M64 68 q4 6 12 8" stroke="#d67" stroke-width="2" fill="none" />
+  <path d="M64 68 q-4 6 -12 8" stroke="#d67" stroke-width="2" fill="none" />
+  <circle cx="64" cy="66" r="3" class="nose" />
+
+  <!-- scarf -->
+  <path class="scarf" d="M40 84 q24 16 48 0 q-6 18 -24 18 q-18 0 -24 -18z" />
+
+</svg>

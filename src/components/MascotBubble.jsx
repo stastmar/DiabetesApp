@@ -17,8 +17,8 @@ export default function MascotBubble({ message = '', open = undefined, onClose }
     <div style={{ position: 'absolute', top: 8, right: 8 }}>
       <div className="mascot-btn" onClick={toggle} role="button" aria-label="Cukřík">
         <div style={{width:44,height:44,borderRadius:22,display:'flex',alignItems:'center',justifyContent:'center',background:'#0b1220',overflow:'hidden',border:'1px solid rgba(255,255,255,0.06)'}}>
-          {/* image file expected at public/cukrik.png - dark background behind white cat */}
-          <img src="/cukrik.png" alt="Cukřík" style={{width:40,height:40,objectFit:'cover',display:'block'}} onError={(e)=>{e.target.style.display='none'}} />
+          {/* load the bundled svg placed in public/ */}
+          <img src="/cukrik.svg" alt="Cukřík" style={{width:40,height:40,objectFit:'cover',display:'block'}} onError={(e)=>{e.target.style.display='none'}} />
         </div>
       </div>
 
