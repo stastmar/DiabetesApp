@@ -1,6 +1,4 @@
 import React from 'react';
-
-import React from 'react';
 import MascotBubble from './MascotBubble';
 
 export default function ProductCard({ product }) {
