@@ -152,7 +152,7 @@ th, td {
 .mascot-btn { cursor: pointer; position: absolute; right: 8px; top: 50%; transform: translateY(-50%); }
 .mascot-bubble {
   position: absolute;
-  right: 48px;
+  right: 56px;
   top: 50%;
   transform: translateY(-50%);
   background: var(--bg);
@@ -163,6 +163,8 @@ th, td {
   box-shadow: var(--shadow);
   z-index: 1200;
 }
+
+.mascot-btn img { background: transparent; }
 
 /* ensure mascot bubble and button appear above card content */
 .card { z-index: 1; }

@@ -16,16 +16,9 @@ export default function MascotBubble({ message = '', open = undefined, onClose }
   return (
     <div style={{ position: 'absolute', top: 8, right: 8 }}>
       <div className="mascot-btn" onClick={toggle} role="button" aria-label="Cukřík">
-        <div style={{width:36,height:36,borderRadius:18,background:'#fff',display:'flex',alignItems:'center',justifyContent:'center',border:'2px solid #cfe9ff'}}>
-          {/* white cat svg */}
-          <svg width="24" height="24" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" aria-hidden>
-            <g stroke="#cfe9ff" strokeWidth="2" fill="#ffffff">
-              <path d="M32 8 L24 18 L16 8 L12 20 C8 28 10 40 20 46 C24 49 28 50 32 50 C36 50 40 49 44 46 C54 40 56 28 52 20 L48 8 L40 18 L32 8 Z" />
-            </g>
-            <circle cx="24" cy="34" r="3" fill="#000" />
-            <circle cx="40" cy="34" r="3" fill="#000" />
-            <path d="M32 38 L30 42 L34 42 Z" fill="#ffb3b3" />
-          </svg>
+        <div style={{width:44,height:44,borderRadius:22,display:'flex',alignItems:'center',justifyContent:'center',background:'#0b1220',overflow:'hidden',border:'1px solid rgba(255,255,255,0.06)'}}>
+          {/* image file expected at public/cukrik.png - dark background behind white cat */}
+          <img src="/cukrik.png" alt="Cukřík" style={{width:40,height:40,objectFit:'cover',display:'block'}} onError={(e)=>{e.target.style.display='none'}} />
         </div>
       </div>
 
