@@ -34,9 +34,9 @@ export default function Kitchen({ onEatOpen }) {
               <div style={{fontSize:12,opacity:0.7}}>{f.desc}</div>
               <div style={{fontSize:12,opacity:0.7,marginTop:6}}>Energeticky: {f.energy} kcal • Sach: {f.carbs} g • Cukry: {f.sugars} g</div>
             </div>
-            <div style={{display:'flex',flexDirection:'column',gap:8}}>
+            <div style={{display:'flex',flexDirection:'column',gap:8,alignItems:'flex-end'}}>
               <button onClick={() => onEatOpen(f)}>Sníst</button>
-              <button onClick={() => alert('Cukřík říká: ' + f.desc)}>Poradit</button>
+              {/* removed separate Poradit button; use Cukřík bubble on the right */}
             </div>
           </div>
         </div>

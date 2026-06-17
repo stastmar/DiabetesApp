@@ -149,11 +149,12 @@ th, td {
   z-index: 1001;
 }
 
-.mascot-btn { cursor: pointer; }
+.mascot-btn { cursor: pointer; position: absolute; right: 8px; top: 50%; transform: translateY(-50%); }
 .mascot-bubble {
   position: absolute;
   right: 48px;
-  top: 8px;
+  top: 50%;
+  transform: translateY(-50%);
   background: var(--bg);
   border: 1px solid var(--border);
   padding: 10px;
