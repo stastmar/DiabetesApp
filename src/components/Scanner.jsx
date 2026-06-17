@@ -23,11 +23,13 @@ export default function Scanner() {
   return (
     <div className="home">
       <div className="card">
-        <h3>Scanner 4E6</h3>
+        <h3>Scanner</h3>
+        <p style={{fontSize:13,opacity:0.8}}>Najdete čárový kód na obalu produktu (obvykle na zadní nebo spodní straně). Zadejte čísla čárového kódu do pole níže a stiskněte Hledat nebo Enter.</p>
         <div className="last-row">
-          <input value={code} onChange={e=>setCode(e.target.value)} onKeyDown={e=>e.key==='Enter' && scan()} placeholder="čárový kód" />
+          <input value={code} onChange={e=>setCode(e.target.value)} onKeyDown={e=>e.key==='Enter' && scan()} placeholder="např. 123456 nebo 0123456789012" />
           <button onClick={scan}>Hledat</button>
         </div>
+        <div style={{fontSize:12,opacity:0.7,marginTop:8}}>Tip: pokud nemáte čárový kód, zkuste napsat název produktu do Scanneru nebo použijte seznam potravin v Kuchyni.</div>
       </div>
 
       {loading && <div className="card">Načítám...</div>}
