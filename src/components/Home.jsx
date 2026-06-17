@@ -1,12 +1,14 @@
 import React from 'react';
 import Mascot from './Mascot';
+import MascotBubble from './MascotBubble';
 import ActivityCard from './ActivityCard';
 import FriendLeaderboard from './FriendLeaderboard';
 
 export default function Home({ latest, glucoseData, openMeasurement, activity, friends }) {
   return (
     <div className="home">
-      <div className="card">
+      <div className="card" style={{position:'relative'}}>
+        <MascotBubble message={'Skvělá práce! Pohyb pomáhá tělu využívat energii.'} />
         <div style={{display:'flex',justifyContent:'space-between',alignItems:'center'}}>
           <div>
             <h3>Poslední měření</h3>
@@ -18,7 +20,8 @@ export default function Home({ latest, glucoseData, openMeasurement, activity, f
         </div>
       </div>
 
-      <div className="card">
+      <div className="card" style={{position:'relative'}}>
+        <MascotBubble message={'Graf ukazuje vývoj glukózy v čase. Sleduj trendy.'} />
         <h3>Vývoj glukózy</h3>
         <div className="chart" style={{height:140}}>
           {/* simple points */}
@@ -28,9 +31,10 @@ export default function Home({ latest, glucoseData, openMeasurement, activity, f
         </div>
       </div>
 
-      <ActivityCard steps={activity.steps} minutes={activity.minutes} calories={activity.calories} />
-
-      <Mascot>Skvělá práce! Nezapomeň pít vodu a hýbat se.</Mascot>
+      <div style={{position:'relative'}}>
+        <ActivityCard steps={activity.steps} minutes={activity.minutes} calories={activity.calories} />
+        <MascotBubble message={'Snaž se každý den být aktivní alespoň 60 minut.'} />
+      </div>
 
       <FriendLeaderboard friends={friends} />
     </div>

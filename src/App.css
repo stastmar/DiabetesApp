@@ -149,6 +149,20 @@ th, td {
   z-index: 1001;
 }
 
+.mascot-btn { cursor: pointer; }
+.mascot-bubble {
+  position: absolute;
+  right: 48px;
+  top: 8px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  padding: 10px;
+  border-radius: 12px;
+  width: 220px;
+  box-shadow: var(--shadow);
+  z-index: 1200;
+}
+
 .modal-actions {
   display: flex;
   justify-content: space-between;

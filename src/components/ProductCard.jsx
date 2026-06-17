@@ -1,9 +1,13 @@
 import React from 'react';
 
+import React from 'react';
+import MascotBubble from './MascotBubble';
+
 export default function ProductCard({ product }) {
   if (!product) return null;
   return (
-    <div className="card">
+    <div className="card" style={{position:'relative'}}>
+      <MascotBubble message={product.tip} />
       <h3>{product.name}</h3>
       <div style={{display:'flex',gap:12}}>
         <div style={{width:120,height:80,background:'#f4f4f6',borderRadius:8}}>
@@ -15,7 +19,6 @@ export default function ProductCard({ product }) {
           <div style={{fontSize:13,opacity:0.8,marginTop:6}}>Sacharidy: {product.carbs} g • Cukry: {product.sugars} g</div>
           <div style={{fontSize:13,opacity:0.8}}>Bílkoviny: {product.protein} g • Tuky: {product.fat} g</div>
           <div style={{marginTop:8,fontWeight:700}}>{product.rating}</div>
-          <div style={{fontSize:13,opacity:0.8,marginTop:6}}>{product.tip}</div>
         </div>
       </div>
     </div>

@@ -1,5 +1,5 @@
 import React from 'react';
-import Mascot from './Mascot';
+import MascotBubble from './MascotBubble';
 
 const foods = [
   { name: 'Jablko', image:'', desc:'Jablko je zdravé a plné vlákniny.', energy:52, carbs:14, sugars:10, protein:0.3, fat:0.2, fiber:2.4, salt:0 },
@@ -19,13 +19,15 @@ const foods = [
 export default function Kitchen({ onEatOpen }) {
   return (
     <div className="home">
-      <div className="card">
+      <div className="card" style={{position:'relative'}}>
+        <MascotBubble message={'V kuchyni najdeš potraviny. Klikni na Poradit pro radu k potravině.'} />
         <h3>Kuchyň 🍽️</h3>
         <p>Vyber jídlo a Cukřík ti poradí.</p>
       </div>
 
       {foods.map((f,i)=> (
-        <div className="card" key={i}>
+        <div className="card" key={i} style={{position:'relative'}}>
+          <MascotBubble message={f.desc} />
           <div style={{display:'flex',justifyContent:'space-between',alignItems:'center'}}>
             <div>
               <strong>{f.name}</strong>
