@@ -164,6 +164,10 @@ th, td {
   z-index: 1200;
 }
 
+/* ensure mascot bubble and button appear above card content */
+.card { z-index: 1; }
+.mascot-btn, .mascot-bubble { z-index: 1300; }
+
 .modal-actions {
   display: flex;
   justify-content: space-between;
