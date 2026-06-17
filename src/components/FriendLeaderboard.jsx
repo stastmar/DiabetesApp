@@ -10,6 +10,7 @@ const badgeMap = {
   quizWinner: '🏆 Vítěz kvízu'
 }
 
+
 export default function FriendLeaderboard({ friends }) {
   return (
     <div className="card">
