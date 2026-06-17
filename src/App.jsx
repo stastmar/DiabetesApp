@@ -55,6 +55,34 @@ export default function App() {
         { name: "Lukáš", points: 102, badges: ['score100','quizWinner'] },
     ]);
 
+    // handle quiz completion: add score to current player (index 0) and update badges
+    const handleQuizComplete = (score) => {
+      setFriends(prev => {
+        // add score to first friend (assumed current user)
+        const updated = prev.map((f, i) => {
+          if (i !== 0) return f;
+          const newPoints = (f.points || 0) + (score || 0);
+          const newBadges = new Set(f.badges || []);
+          if (newPoints >= 100) newBadges.add('score100');
+          return { ...f, points: newPoints, badges: Array.from(newBadges) };
+        });
+
+        // update quizWinner badge for whoever is currently first
+        let maxPoints = -Infinity;
+        let leaderIdx = -1;
+        updated.forEach((f, idx) => {
+          if ((f.points||0) > maxPoints) { maxPoints = f.points||0; leaderIdx = idx; }
+        });
+
+        return updated.map((f, idx) => {
+          const badges = new Set(f.badges || []);
+          if (idx === leaderIdx) badges.add('quizWinner');
+          else badges.delete('quizWinner');
+          return { ...f, badges: Array.from(badges) };
+        });
+      });
+    };
+
     /* MODAL */
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [modalMode, setModalMode] = useState(null); // 'measurement' | 'eat' | null
@@ -180,7 +208,7 @@ export default function App() {
 
             {page === 'scanner' && <Scanner />}
 
-            {page === 'quiz' && <Quiz />}
+            {page === 'quiz' && <Quiz onComplete={handleQuizComplete} />}
 
             <BottomNav page={page} setPage={setPage} />
 
