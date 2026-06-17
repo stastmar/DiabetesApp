@@ -1,5 +1,13 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "./App.css";
+import Home from './components/Home';
+import Kitchen from './components/Kitchen';
+import Scanner from './components/Scanner';
+import Quiz from './components/Quiz';
+import BottomNav from './components/BottomNav';
+import Mascot from './components/Mascot';
+import ProductCard from './components/ProductCard';
+import { getProductsPreferFirestore, getProductByBarcodePreferFirestore } from './firebase';
 
 /* ---------------------------------------------KITCHEN------------------------------------------------ */
 function Kitchen({ onEatOpen }) {
@@ -47,8 +55,10 @@ function Scanner({ barcode, setBarcode, product, scanProduct }) {
 
                 <div className="last-row">
                     <input
+                        type="text"
                         value={barcode}
                         onChange={(e) => setBarcode(e.target.value)}
+                        onKeyDown={(e) => { if (e.key === 'Enter') scanProduct(); }}
                         placeholder="čárový kód"
                     />
 
@@ -115,11 +125,11 @@ export default function App() {
     const min = 4.0;
     const max = 8.0;
 
-    /* FRIENDS */
-    const [friends] = useState([
-        { name: "Anna", value: 5.4 },
-        { name: "Tomáš", value: 6.8 },
-        { name: "Lukáš", value: 5.9 },
+    /* FRIENDS (leaderboard) */
+    const [friends, setFriends] = useState([
+        { name: "Anna", points: 80, badges: ['nutrition'] },
+        { name: "Tomáš", points: 45, badges: ['movement'] },
+        { name: "Lukáš", points: 102, badges: ['score100','quizWinner'] },
     ]);
 
     /* MODAL */
@@ -131,12 +141,14 @@ export default function App() {
     /* SCANNER */
     const [barcode, setBarcode] = useState("");
     const [product, setProduct] = useState(null);
+    const [allProducts, setAllProducts] = useState([]);
 
-    const products = {
-        "123456": { name: "Jablko", sugar: 10, carbs: 14, kcal: 52 },
-        "987654": { name: "Cola", sugar: 35, carbs: 39, kcal: 140 },
-        "111111": { name: "Chléb", sugar: 3, carbs: 49, kcal: 265 },
-    };
+    useEffect(()=>{
+      (async ()=>{
+        const items = await getProductsPreferFirestore();
+        setAllProducts(items || []);
+      })();
+    },[]);
 
     /* INSULIN */
     const insulinQuestions = [
@@ -200,7 +212,19 @@ export default function App() {
     };
 
     const scanProduct = () => {
-        const found = products[barcode];
+        const code = (barcode || "").trim();
+        if (!code) {
+            setProduct({ error: "Zadejte čárový kód" });
+            return;
+        }
+
+        // try exact match first, then try without leading zeros
+        let found = products[code];
+        if (!found) {
+            const noLeadingZeros = code.replace(/^0+/, "");
+            found = products[noLeadingZeros];
+        }
+
         setProduct(found || { error: "Produkt nenalezen" });
     };
 
@@ -225,162 +249,17 @@ export default function App() {
     return (
         <div className="app">
 
-            {page === "home" && (
-                <div className="home">
-
-                    <div className="card">
-                        <h3>Poslední měření</h3>
-
-                        <div className="last-row">
-                            <div className="big-value">
-                                {latest.toFixed(1)} mmol/L
-                            </div>
-
-                            <button onClick={openMeasurementModal}>
-                                + Přidat
-                            </button>
-                        </div>
-                    </div>
-
-                    <div className="card">
-                        <h3>Vývoj glukózy</h3>
-
-                        <div className="chart">
-
-                            {glucoseData.map((v, i) => {
-                                if (i === glucoseData.length - 1) return null;
-
-                                const x1 = (i / (glucoseData.length - 1)) * 100;
-                                const x2 = ((i + 1) / (glucoseData.length - 1)) * 100;
-
-                                const y1 = 100 - (v / max) * 100;
-                                const y2 = 100 - (glucoseData[i + 1] / max) * 100;
-
-                                const color =
-                                    v < min || v > max ||
-                                    glucoseData[i + 1] < min ||
-                                    glucoseData[i + 1] > max
-                                        ? "#ef4444"
-                                        : "#22c55e";
-
-                                return (
-                                    <div
-                                        key={i}
-                                        style={{
-                                            position: "absolute",
-                                            left: `${x1}%`,
-                                            top: `${y1}%`,
-                                            width: `${x2 - x1}%`,
-                                            height: "2px",
-                                            background: color,
-                                            transformOrigin: "left",
-                                        }}
-                                    />
-                                );
-                            })}
-
-                            {glucoseData.map((v, i) => {
-                                const x = (i / (glucoseData.length - 1)) * 100;
-                                const y = 100 - (v / max) * 100;
-                                const bad = v < min || v > max;
-
-                                return (
-                                    <div
-                                        key={i}
-                                        className="point"
-                                        style={{
-                                            left: `${x}%`,
-                                            top: `${y}%`,
-                                            background: bad ? "#ef4444" : "#22c55e",
-                                        }}
-                                    />
-                                );
-                            })}
-
-                        </div>
-                    </div>
-
-                    <div className="card">
-                        <h3>Přátelé</h3>
-
-                        <table>
-                            <tbody>
-                            {friends.map((f, i) => (
-                                <tr key={i}>
-                                    <td>{f.name}</td>
-                                    <td>{f.value} mmol/L</td>
-                                </tr>
-                            ))}
-                            </tbody>
-                        </table>
-                    </div>
-
-                </div>
+            {page === 'home' && (
+              <Home latest={latest} glucoseData={glucoseData} openMeasurement={openMeasurementModal} activity={{steps:4500,minutes:32,calories:210}} friends={friends} />
             )}
 
-            {page === "kitchen" && <Kitchen onEatOpen={openEatModal} />}
+            {page === 'kitchen' && <Kitchen onEatOpen={openEatModal} />}
 
-            {page === "scanner" && (
-                <Scanner
-                    barcode={barcode}
-                    setBarcode={setBarcode}
-                    product={product}
-                    scanProduct={scanProduct}
-                />
-            )}
+            {page === 'scanner' && <Scanner />}
 
-            {page === "insulin" && (
-                <div className="home">
-                    <div className="card">
-                        <h3>💉 Skóre: {insulinScore}</h3>
-                        <ProgressBar answers={answers} total={insulinQuestions.length} />
-                    </div>
+            {page === 'quiz' && <Quiz />}
 
-                    {result === null ? (
-                        <div className="card">
-                            <h2>Kolo {insulinIndex + 1}/5</h2>
-
-                            <p style={{ fontSize: "22px" }}>
-                                {insulinQuestions[insulinIndex].food}
-                            </p>
-
-                            <h3>{insulinQuestions[insulinIndex].glucose} mmol/L</h3>
-
-                            {[0,1,2,3,4].map((d) => (
-                                <button key={d} onClick={() => answerInsulin(d)}>
-                                    {d} jednotek
-                                </button>
-                            ))}
-                        </div>
-                    ) : (
-                        <div className="card">
-                            <h2>Hotovo 🎯</h2>
-
-                            <p>
-                                Správně: {answers.filter(Boolean).length}/{answers.length}
-                            </p>
-
-                            <button
-                                onClick={() => {
-                                    setInsulinIndex(0);
-                                    setAnswers([]);
-                                    setResult(null);
-                                    setInsulinScore(0);
-                                }}
-                            >
-                                Restart
-                            </button>
-                        </div>
-                    )}
-                </div>
-            )}
-
-            <div className="bottom-nav">
-                <button onClick={() => setPage("home")}>Domů</button>
-                <button onClick={() => setPage("kitchen")}>Kuchyň</button>
-                <button onClick={() => setPage("scanner")}>Scanner</button>
-                <button onClick={() => setPage("insulin")}>Inzulín</button>
-            </div>
+            <BottomNav page={page} setPage={setPage} />
 
             {isModalOpen && (
                 <div className="modal-overlay" onClick={closeModal}>
@@ -403,10 +282,10 @@ export default function App() {
                         {modalMode === 'eat' && modalPayload && (
                             <>
                                 <h3>Sníst: {modalPayload.name}</h3>
-                                <p>Dopad na glukózu: {modalPayload.impact > 0 ? '+' : ''}{modalPayload.impact}</p>
-                                <div className="modal-actions">
-                                    <button onClick={closeModal}>Zrušit</button>
-                                    <button onClick={confirmEat}>Sníst</button>
+                                <p>Dopad na glukózu: {modalPayload.energy ? modalPayload.energy + ' kcal' : ''}</p>
+                                <div style={{marginTop:8}}>
+                                  <button onClick={closeModal}>Zrušit</button>
+                                  <button onClick={() => { eatFood(modalPayload.energy ? modalPayload.energy/100 : 0.5); closeModal(); }}>Sníst</button>
                                 </div>
                             </>
                         )}

@@ -1,0 +1,53 @@
+export const fallbackProducts = [
+  {
+    barcode: '123456',
+    name: 'Jablko',
+    category: 'Ovoce',
+    energy: 52,
+    carbs: 14,
+    sugars: 10,
+    protein: 0.3,
+    fat: 0.2,
+    saturatedFat: 0.0,
+    fiber: 2.4,
+    salt: 0.0,
+    portion: '1 ks (150g)',
+    rating: '🟢 Vhodná volba',
+    tip: 'Skvělá práce! Pohyb pomáhá tělu využívat energii.',
+    image: ''
+  },
+  {
+    barcode: '987654',
+    name: 'Cola',
+    category: 'Nápoje',
+    energy: 140,
+    carbs: 39,
+    sugars: 35,
+    protein: 0,
+    fat: 0,
+    saturatedFat: 0,
+    fiber: 0,
+    salt: 0,
+    portion: '330 ml',
+    rating: '🔴 Pouze příležitostně',
+    tip: 'Nezapomeň pít dostatek vody.',
+    image: ''
+  },
+  {
+    barcode: '111111',
+    name: 'Chléb',
+    category: 'Pečivo',
+    energy: 265,
+    carbs: 49,
+    sugars: 3,
+    protein: 9,
+    fat: 3.2,
+    saturatedFat: 0.6,
+    fiber: 2.7,
+    salt: 1.2,
+    portion: '100 g',
+    rating: '🟡 Konzumovat s mírou',
+    tip: 'Sacharidy jsou důležitým zdrojem energie.',
+    image: ''
+  }
+];
