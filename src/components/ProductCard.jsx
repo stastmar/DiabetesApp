@@ -14,7 +14,7 @@ export default function ProductCard({ product }) {
         <div>
           <div style={{fontSize:13,opacity:0.8}}>{product.category}</div>
           <div style={{fontWeight:700,marginTop:6}}>{product.energy} kcal • {product.portion}</div>
-          <div style={{fontSize:13,opacity:0.8,marginTop:6}}>Sacharidy: {product.carbs} g • Cukry: {product.sugars} g</div>
+          <div style={{fontSize:13,opacity:0.8,marginTop:6}}>Sacharidy: {product.carbs} g</div>
           <div style={{fontSize:13,opacity:0.8}}>Bílkoviny: {product.protein} g • Tuky: {product.fat} g</div>
           <div style={{marginTop:8,fontWeight:700}}>{product.rating}</div>
         </div>
