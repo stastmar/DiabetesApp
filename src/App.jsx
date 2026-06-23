@@ -9,7 +9,6 @@ import Mascot from './components/Mascot';
 import ProductCard from './components/ProductCard';
 import { getProductsPreferFirestore, getProductByBarcodePreferFirestore } from './firebase';
 
-/* -----------------------------------------------PROGRESS BAR-------------------------------------------------- */
 function ProgressBar({ answers, total }) {
     return (
         <div style={{ display: "flex", gap: "6px", marginBottom: "12px" }}>
@@ -35,11 +34,8 @@ function ProgressBar({ answers, total }) {
     );
 }
 
-/* ------------------------------------------------MAIN APP----------------------------------------------------- */
 export default function App() {
     const [page, setPage] = useState("home");
-
-    /* HOME DATA */
     const [latest, setLatest] = useState(6.2);
     const [glucoseData, setGlucoseData] = useState([
         5.2, 5.8, 6.1, 5.5, 6.4, 7.0, 6.2,
@@ -48,17 +44,15 @@ export default function App() {
     const min = 4.0;
     const max = 8.0;
 
-    /* FRIENDS (leaderboard) */
+
     const [friends, setFriends] = useState([
         { name: "Anna", points: 80, badges: ['nutrition'] },
         { name: "Tomáš", points: 45, badges: ['movement'] },
         { name: "Lukáš", points: 102, badges: ['score100','quizWinner'] },
     ]);
 
-    // handle quiz completion: add score to current player (index 0) and update badges
     const handleQuizComplete = (score) => {
       setFriends(prev => {
-        // add score to first friend (assumed current user)
         const updated = prev.map((f, i) => {
           if (i !== 0) return f;
           const newPoints = (f.points || 0) + (score || 0);
@@ -67,7 +61,6 @@ export default function App() {
           return { ...f, points: newPoints, badges: Array.from(newBadges) };
         });
 
-        // update quizWinner badge for whoever is currently first
         let maxPoints = -Infinity;
         let leaderIdx = -1;
         updated.forEach((f, idx) => {
@@ -83,13 +76,12 @@ export default function App() {
       });
     };
 
-    /* MODAL */
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const [modalMode, setModalMode] = useState(null); // 'measurement' | 'eat' | null
+    const [modalMode, setModalMode] = useState(null);
     const [modalPayload, setModalPayload] = useState(null);
     const [modalValue, setModalValue] = useState("");
 
-    /* SCANNER */
+
     const [barcode, setBarcode] = useState("");
     const [product, setProduct] = useState(null);
     const [allProducts, setAllProducts] = useState([]);
@@ -101,7 +93,7 @@ export default function App() {
       })();
     },[]);
 
-    /* INSULIN */
+
     const insulinQuestions = [
         { food: "🍞 Chleba", glucose: 9.8, correct: 3 },
         { food: "🍎 Jablko", glucose: 7.2, correct: 1 },
@@ -115,7 +107,6 @@ export default function App() {
     const [result, setResult] = useState(null);
     const [insulinScore, setInsulinScore] = useState(0);
 
-    /* ----------------------------------------------LOGIC--------------------------------------------- */
 
     const eatFood = (impact) => {
         const newValue = latest + impact;
@@ -169,7 +160,7 @@ export default function App() {
             return;
         }
 
-        // try exact match first, then try without leading zeros
+
         let found = products[code];
         if (!found) {
             const noLeadingZeros = code.replace(/^0+/, "");
@@ -195,7 +186,6 @@ export default function App() {
         }
     };
 
-    /* -----------------------------------------UI--------------------------------------------------- */
 
     return (
         <div className="app">

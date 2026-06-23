@@ -2,15 +2,13 @@ import React, { useState } from 'react';
 import { questions } from '../data/questions';
 import QuestionCard from './QuestionCard';
 
-// Quiz: shows exactly 10 questions per attempt. Each correct answer = 10 points.
-// When finished, calls onComplete(score) once. Restart starts a fresh quiz at question 1.
+
 export default function Quiz({ onComplete }) {
   const TOTAL = 10;
   const [index, setIndex] = useState(0);
   const [answers, setAnswers] = useState([]);
   const [finished, setFinished] = useState(false);
 
-  // ensure we have at least TOTAL questions; if not, repeat from list
   const q = questions[index % questions.length];
 
   const handleAnswer = (i) => {
@@ -19,7 +17,6 @@ export default function Quiz({ onComplete }) {
     const newAnswers = [...answers, correct];
     setAnswers(newAnswers);
 
-    // if we reached TOTAL questions, finish
     if (newAnswers.length >= TOTAL) {
       const score = newAnswers.filter(Boolean).length * 10;
       setFinished(true);
@@ -31,7 +28,6 @@ export default function Quiz({ onComplete }) {
   };
 
   const restart = () => {
-    // start a fresh quiz at first question
     setIndex(0);
     setAnswers([]);
     setFinished(false);

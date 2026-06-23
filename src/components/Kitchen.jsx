@@ -36,7 +36,6 @@ export default function Kitchen({ onEatOpen }) {
             </div>
             <div style={{display:'flex',flexDirection:'column',gap:8,alignItems:'flex-end'}}>
               <button onClick={() => onEatOpen(f)}>Sníst</button>
-              {/* removed separate Poradit button; use Cukřík bubble on the right */}
             </div>
           </div>
         </div>

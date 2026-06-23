@@ -1,10 +1,7 @@
-// Firebase helper: tries to load Firestore if environment variables are set.
-// If Firebase SDK is not available or config missing, falls back to local data.
 import { fallbackProducts } from "./data/fallbackProducts";
 
 async function initFirestore() {
   try {
-    // dynamic import so project can run without firebase installed
     const firebase = await import('firebase/compat/app');
     await import('firebase/compat/firestore');
 
@@ -25,7 +22,6 @@ async function initFirestore() {
     const db = firebase.firestore();
     return db;
   } catch (e) {
-    // firebase not installed or failed
     return null;
   }
 }

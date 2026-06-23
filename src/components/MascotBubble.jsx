@@ -17,7 +17,6 @@ export default function MascotBubble({ message = '', open = undefined, onClose }
     <div style={{ position: 'absolute', top: 8, right: 8 }}>
       <div className="mascot-btn" onClick={toggle} role="button" aria-label="Cukřík">
         <div style={{width:48,height:48,borderRadius:24,display:'flex',alignItems:'center',justifyContent:'center',background:'#0b1220',overflow:'hidden',border:'1px solid rgba(255,255,255,0.06)'}}>
-          {/* simple emoji fallback as mascot */}
           <div style={{fontSize:22,lineHeight:1,color:'#fff'}} aria-hidden>😺</div>
         </div>
       </div>

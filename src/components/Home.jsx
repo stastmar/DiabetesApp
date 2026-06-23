@@ -24,7 +24,6 @@ export default function Home({ latest, glucoseData, openMeasurement, activity, f
         <MascotBubble message={'Graf ukazuje vývoj glukózy v čase. Sleduj trendy.'} />
         <h3>Vývoj glukózy</h3>
         <div className="chart" style={{height:140}}>
-          {/* simple points */}
           {glucoseData.map((v,i)=> (
             <div key={i} className="point" style={{left:`${(i/(glucoseData.length-1))*100}%`,top:`${100-(v/10)*100}%`,background: v<4 || v>8 ? '#ef4444' : '#22c55e'}}/>
           ))}
